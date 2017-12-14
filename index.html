@@ -1,0 +1,340 @@
+<DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Tesla Model 3 calculator</title>
+        <meta charset="UTF-8">
+        <style>
+            body, html {
+                margin: 0;
+                background-color: #fff;
+            }
+            h1 {
+                margin: 1em;
+            }
+            .car {
+                width: 80%;
+                margin: -100px auto;
+                height: auto;
+                display: block;
+            }
+            section.data {
+                width: 20%;
+                float: left;
+                margin-left: 50px;
+            }
+            section.data .modify {
+                width: 10px;
+                height: 10px;
+                display: inline-block;
+                margin-left: 5px;
+                cursor: pointer;
+            }
+            section.data .modify.add {
+                background-image: url('img/add.svg');
+            }
+            section.data .modify.remove {
+                background-image: url('img/remove.svg');
+            }
+            section.color {
+                width: 50%;
+                margin: auto;
+                text-align: center;
+                float: left;
+            }
+            section.color .button {
+                display: inline-block;
+                width: 75px;
+                height: 75px;
+                border-radius: 50%;
+                border: 1px solid #000;
+                margin: 0.75em;
+                cursor: pointer;
+            }
+            section.color .button.black {
+                background-image: url("img/color_black.png");
+            }
+            section.color .button.midnight {
+                background-image: url("img/color_midnight.png");
+            }
+            section.color .button.silver {
+                background-image: url("img/color_silver.png");
+            }
+            section.color .button.white {
+                background-image: url("img/color_white.png");
+            }
+            section.color .button.red {
+                background-image: url("img/color_red.png");
+            }
+            section.color .button.blue {
+                background-image: url("img/color_blue.png");
+            }
+            section.wheels {
+                float: left;
+                width: 25%;
+                text-align: center;
+            }
+            section.wheels .button {
+                display: inline-block;
+                width: 75px;
+                height: 75px;
+                background-color: #FFF;
+                border-radius: 50%;
+                border: 1px solid #000;
+                cursor: pointer;
+                margin: 0.75em;
+                background-size: 100%;
+            }
+            section .button.selected {
+                border: 2px solid #f00;
+            }
+            section.wheels .button.aero {
+                background-image: url("img/wheel_aero.png");
+            }
+            section.wheels .button.sport {
+                background-image: url("img/wheel_sport.png");
+            }
+            section.price {
+                clear: both;
+                margin-left: 50px;
+            }
+            footer {
+                clear: both;
+                margin-top: 150px;
+                text-align: center;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <h1>Configure your Tesla Model 3</h1>
+        </header>
+        <main>
+            <img class="car" src="img/black_aero.png" title="Model 3">
+            <section class="data">
+                <p class="color"><b>Color:</b> <span class="text">Solid Black</span></p>
+                <p class="wheels"><b>Wheels:</b> <span class="text">Aero</span></p>
+                <p class="premium"><b>Premium:</b> <span class="text">Yes</span><span class="modify remove"></span></p>
+                <p class="battery"><b>Battery:</b> <span class="text">Long Range</span><span class="modify remove"></span></p>
+                <p class="autopilot"><b>Enhanced Autopilot:</b> <span class="text">No</span><span class="modify add"></span></p>
+                <p class="self_driving"><b>Full Self-Driving*:</b> <span class="text">No</span><span class="modify add"></span></p>
+            </section>
+            <section class="color">
+                <div class="button black selected"></div>
+                <div class="button blue"></div>
+                <div class="button red"></div>
+                <div class="button silver"></div>
+                <div class="button midnight"></div>
+                <div class="button white"></div>
+            </section>
+            <section class="wheels">
+                <div class="button aero selected"></div>
+                <div class="button sport"></div>
+            </section>
+            <section class="price">
+                <h2>Total: <span>$49,000</span></h2>
+            </section>
+        </main>
+        <footer>
+            <p><b>*Note:</b> Full Self-Driving requires Enhanced Autopilot</p>
+            <p>Copyright © 2017-2018 - Iban Eguia Moraza</p>
+        </footer>
+        <script src="jquery-3.2.1.slim.min.js"></script>
+        <script>
+        $(function() {
+            var color = 'black';
+            var wheels = 'aero';
+            var premium = true;
+            var battery = 'long';
+            var autopilot = false;
+            var self_driving = false;
+
+            $('.color .button').click(function() {
+                if ($(this).hasClass('black')) {
+                    color = 'black';
+                } else if ($(this).hasClass('blue')) {
+                    color = 'blue';
+                } else if ($(this).hasClass('red')) {
+                    color = 'red';
+                } else if ($(this).hasClass('silver')) {
+                    color = 'silver';
+                } else if ($(this).hasClass('midnight')) {
+                    color = 'midnight';
+                } else if ($(this).hasClass('white')) {
+                    color = 'white';
+                }
+                update_image();
+                $('.color .button.selected').removeClass('selected');
+                $(this).addClass('selected');
+                update_data();
+                update_price();
+            });
+            $('.wheels .button').click(function() {
+                if ($(this).hasClass('aero')) {
+                    wheels = 'aero';
+                } else if ($(this).hasClass('sport')) {
+                    wheels = 'sport';
+                }
+                update_image();
+                $('.wheels .button.selected').removeClass('selected');
+                $(this).addClass('selected');
+                update_data();
+                update_price();
+            });
+            $('.data .premium .modify').click(function() {
+                if ($(this).hasClass('add')) {
+                    premium = true;
+                    $(this).removeClass('add');
+                    $(this).addClass('remove');
+                } else {
+                    premium = false;
+                    $(this).removeClass('remove');
+                    $(this).addClass('add');
+                }
+                update_data();
+                update_price();
+            });
+            $('.data .battery .modify').click(function() {
+                if ($(this).hasClass('add')) {
+                    battery = 'long';
+                    $(this).removeClass('add');
+                    $(this).addClass('remove');
+                } else {
+                    battery = 'standard';
+                    $(this).removeClass('remove');
+                    $(this).addClass('add');
+                }
+                update_data();
+                update_price();
+            });
+            $('.data .autopilot .modify').click(function() {
+                if ($(this).hasClass('add')) {
+                    autopilot = true;
+                    $(this).removeClass('add');
+                    $(this).addClass('remove');
+                } else {
+                    autopilot = false;
+                    $(this).removeClass('remove');
+                    $(this).addClass('add');
+
+                    if (self_driving) {
+                        self_driving = false;
+                        $('.data .self_driving .modify').removeClass('remove');
+                        $('.data .self_driving .modify').addClass('add');
+                    }
+                }
+                update_data();
+                update_price();
+            });
+            $('.data .self_driving .modify').click(function() {
+                if ($(this).hasClass('add')) {
+                    self_driving = true;
+                    $(this).removeClass('add');
+                    $(this).addClass('remove');
+
+                    if (!autopilot) {
+                        autopilot = true;
+                        $('.data .autopilot .modify').removeClass('add');
+                        $('.data .autopilot .modify').addClass('remove');
+                    }
+                } else {
+                    self_driving = false;
+                    $(this).removeClass('remove');
+                    $(this).addClass('add');
+                }
+                update_data();
+                update_price();
+            });
+
+
+            var update_image = function() {
+                $('img.car').attr('src', 'img/' + color + '_' + wheels + '.png');
+            };
+            var update_data = function() {
+                var color_text = 'N/A';
+                if (color == 'black') {
+                    color_text = 'Solid Black';
+                } else if (color == 'blue') {
+                    color_text = 'Deep Blue Metallic';
+                } else if (color == 'red') {
+                    color_text = 'Red Multi-Coat';
+                } else if (color == 'silver') {
+                    color_text = 'Silver Metallic';
+                } else if (color == 'midnight') {
+                    color_text = 'Midnight Silver Metallic';
+                } else if (color == 'white') {
+                    color_text = 'Pearl White Multi-Coat';
+                }
+                $('.data .color .text').text(color_text);
+
+                var wheels_text = 'N/A';
+                if (wheels == 'aero') {
+                    wheels_text = 'Aero';
+                } else if (wheels == 'sport') {
+                    wheels_text = 'Sport';
+                }
+                $('.data .wheels .text').text(wheels_text);
+
+                var premium_text = premium ? 'Yes' : 'No';
+                $('.data .premium .text').text(premium_text);
+
+                var battery_text = battery == 'long' ? 'Long Range' : 'Standard';
+                $('.data .battery .text').text(battery_text);
+
+                var autopilot_text = autopilot ? 'Yes' : 'No';
+                $('.data .autopilot .text').text(autopilot_text);
+
+                var self_driving_text = self_driving ? 'Yes' : 'No';
+                $('.data .self_driving .text').text(self_driving_text);
+            };
+
+            var update_price = function() {
+                var price = 35000;
+                if (premium) {
+                    price += prices.usd.premium;
+                }
+                if (autopilot) {
+                    price += prices.usd.autopilot;
+                }
+                if (self_driving) {
+                    price += prices.usd.self_driving;
+                }
+                price += prices.usd.wheels[wheels];
+                price += prices.usd.paint[color];
+                price += prices.usd.battery[battery];
+
+                $('.price h2 span').text('$' + number_format(price, ','));
+            };
+        });
+
+        var prices = {
+            'usd': {
+                'wheels': {
+                    'aero': 0,
+                    'sport': 1500,
+                },
+                'paint': {
+                    'black': 0,
+                    'blue': 1000,
+                    'red': 1000,
+                    'silver': 1000,
+                    'midnight': 1000,
+                    'white': 1000
+                },
+                'battery': {
+                    'standard': 0,
+                    'long': 9000
+                },
+                'premium': 5000,
+                'autopilot': 5000,
+                'self_driving': 3000
+            }
+        };
+        var usd_to_eur = 0.849668;
+        var conversion_margin = 0.025;
+
+        var number_format = function(x, t) {
+            return x.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, t);
+        };
+        </script>
+    </body>
+</html>
