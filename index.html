@@ -11,6 +11,55 @@
             h1 {
                 margin: 1em;
             }
+            header nav {
+              float: right;
+              border-radius: 5px;
+              border: 1px solid #000;
+              cursor: pointer;
+              width: 200px;
+              margin: -75px 10px;
+              height: 53px;
+            }
+
+            header nav.currency {
+              margin-right: 230px;
+              width: 105px;
+            }
+
+            header nav ul {
+              list-style-type: none;
+              padding: 0;
+            }
+            header nav ul li {
+              display: none;
+              padding: 0 10px;
+            }
+            header nav ul li.selected {
+              display: block;
+            }
+            header nav:not(.open) ul li.selected::after {
+              content: "↴";
+              margin-left: 5px;
+            }
+            header nav.open ul li {
+              display: block;
+            }
+            header nav.open ul li:hover {
+              background-color: #36f;
+              color: #fff;
+            }
+            header nav.lang ul li {
+              padding-left: 45px;
+              background-position: 13px 3px;
+              background-repeat: no-repeat;
+              background-size: 25px;
+            }
+            header nav.lang ul li[data-lang="es_ES"] {
+              background-image: url("img/es_ES.svg");
+            }
+            header nav.lang ul li[data-lang="en_US"] {
+              background-image: url("img/en_US.svg");
+            }
             .car {
                 width: 80%;
                 margin: -100px auto;
@@ -107,6 +156,18 @@
     <body>
         <header>
             <h1>Configure your Tesla Model 3</h1>
+            <nav class="lang">
+              <ul>
+                <li data-lang="en_US" class="selected">English (USA)</li>
+                <li data-lang="es_ES">Español (España)</li>
+              </ul>
+            </nav>
+            <nav class="currency">
+              <ul>
+                <li data-currency="usd" class="selected">USD ($)</li>
+                <li data-currency="eur">EUR (€)</li>
+              </ul>
+            </nav>
         </header>
         <main>
             <img class="car" src="img/black_aero.png" title="Model 3">
