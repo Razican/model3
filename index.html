@@ -23,7 +23,7 @@
 
             header nav.currency {
               margin-right: 230px;
-              width: 105px;
+              width: 120px;
             }
 
             header nav ul {
@@ -67,9 +67,9 @@
                 display: block;
             }
             section.data {
-                width: 20%;
-                float: left;
-                margin-left: 50px;
+                width: 35%;
+                margin: 150px 0 0 50px;
+                clear: both;
             }
             section.data .modify {
                 width: 10px;
@@ -86,7 +86,7 @@
             }
             section.color {
                 width: 50%;
-                margin: auto;
+                margin: auto auto auto 20%;
                 text-align: center;
                 float: left;
             }
@@ -165,20 +165,12 @@
             <nav class="currency">
               <ul>
                 <li data-currency="usd" class="selected">USD ($)</li>
-                <li data-currency="eur">EUR (€)</li>
+                <li data-currency="eur">EUR (€)**</li>
               </ul>
             </nav>
         </header>
         <main>
             <img class="car" src="img/black_aero.png" title="Model 3">
-            <section class="data">
-                <p class="color"><b>Color:</b> <span class="text">Solid Black</span></p>
-                <p class="wheels"><b>Wheels:</b> <span class="text">Aero</span></p>
-                <p class="premium"><b>Premium:</b> <span class="text">Yes</span><span class="modify remove"></span></p>
-                <p class="battery"><b>Battery:</b> <span class="text">Long Range</span><span class="modify remove"></span></p>
-                <p class="autopilot"><b>Enhanced Autopilot:</b> <span class="text">No</span><span class="modify add"></span></p>
-                <p class="self_driving"><b>Full Self-Driving*:</b> <span class="text">No</span><span class="modify add"></span></p>
-            </section>
             <section class="color">
                 <div class="button black selected"></div>
                 <div class="button blue"></div>
@@ -191,23 +183,150 @@
                 <div class="button aero selected"></div>
                 <div class="button sport"></div>
             </section>
+            <section class="data">
+                <p class="color"><b>Color:</b> <span class="text">Solid Black</span> (<span class="price">Included</span>)</p>
+                <p class="wheels"><b>Wheels:</b> <span class="text">Aero</span> (<span class="price">Included</span>)</p>
+                <p class="premium"><b>Premium:</b> <span class="text">Yes</span> (<span class="price">+$5,000</span>)<span class="modify remove"></span></p>
+                <p class="battery"><b>Battery:</b> <span class="text">Long Range</span> (<span class="price">+$9,000</span>)<span class="modify remove"></span></p>
+                <p class="autopilot"><b>Enhanced Autopilot:</b> <span class="text">No</span> (<span class="price">+$5,000</span>)<span class="modify add"></span></p>
+                <p class="self_driving"><b>Full Self-Driving*:</b> <span class="text">No</span> (<span class="price">+$3,000</span>)<span class="modify add"></span></p>
+                <p class="dual"><b>Dual Motors:</b> <span class="text">No</span> (<span class="price">+$4,500</span>**)<span class="modify add"></span></p>
+                <p class="performance"><b>Performance mode***:</b> <span class="text">No</span> (<span class="price">+$15,000</span>**)<span class="modify add"></span></p>
+            </section>
             <section class="price">
-                <h2>Total: <span>$49,000</span></h2>
+                <h2>Total (no VAT): <span>$49,000</span></h2>
             </section>
         </main>
         <footer>
-            <p><b>*Note:</b> Full Self-Driving requires Enhanced Autopilot</p>
-            <p>Copyright © 2017-2018 - Iban Eguia Moraza</p>
+            <p class="note"><b>*Note:</b> Full Self-Driving requires Enhanced Autopilot.</p>
+            <p class="note"><b>**Note:</b> Tentative price, not officially released by Tesla.</p>
+            <p class="note"><b>***Note:</b> Performance mode requires dual motors.</p>
+            <p class="copyright">Copyright © 2017-2018 - Iban Eguia Moraza</p>
         </footer>
         <script src="jquery-3.2.1.slim.min.js"></script>
         <script>
         $(function() {
+            var currency = 'usd';
+            var current_lang = 'en_US';
+
             var color = 'black';
             var wheels = 'aero';
             var premium = true;
             var battery = 'long';
             var autopilot = false;
             var self_driving = false;
+            var dual = false;
+            var performance = false;
+
+            var usd_to_eur = 1/1.19324;
+            var change_margin = 1.025;
+
+            var prices = {
+                'usd': {
+                    'base': 35000,
+                    'wheels': {
+                        'aero': 0,
+                        'sport': 1500,
+                    },
+                    'paint': {
+                        'black': 0,
+                        'blue': 1000,
+                        'red': 1000,
+                        'silver': 1000,
+                        'midnight': 1000,
+                        'white': 1000
+                    },
+                    'battery': {
+                        'standard': 0,
+                        'long': 9000
+                    },
+                    'premium': 5000,
+                    'autopilot': 5000,
+                    'self_driving': 3000,
+                    'dual': 4500,
+                    'performance': 15000
+                },
+                'eur': {
+                    'base': Math.round(35000*usd_to_eur*change_margin),
+                    'wheels': {
+                        'aero': 0,
+                        'sport': Math.round(1500*usd_to_eur*change_margin),
+                    },
+                    'paint': {
+                        'black': 0,
+                        'blue': Math.round(1000*usd_to_eur*change_margin),
+                        'red': Math.round(1000*usd_to_eur*change_margin),
+                        'silver': Math.round(1000*usd_to_eur*change_margin),
+                        'midnight': Math.round(1000*usd_to_eur*change_margin),
+                        'white': Math.round(1000*usd_to_eur*change_margin)
+                    },
+                    'battery': {
+                        'standard': 0,
+                        'long': Math.round(9000*usd_to_eur*change_margin)
+                    },
+                    'premium': Math.round(5000*usd_to_eur*change_margin),
+                    'autopilot': Math.round(5000*usd_to_eur*change_margin),
+                    'self_driving': Math.round(3000*usd_to_eur*change_margin),
+                    'dual': Math.round(4500*usd_to_eur*change_margin),
+                    'performance': Math.round(15000*usd_to_eur*change_margin)
+                }
+            };
+
+            var lang = {
+                'en_US': {
+                    'thou_sep': ',',
+                    'yes': 'Yes',
+                    'no': 'No',
+                    'included': 'Included',
+                    'wheels': {
+                        'aero': 'Aero',
+                        'sport': 'Sport',
+                    },
+                    'paint': {
+                        'black': 'Solid Black',
+                        'blue': 'Deep Blue Metallic',
+                        'red': 'Red Multi-Coat',
+                        'silver': 'Silver Metallic',
+                        'midnight': 'Midnight Silver Metallic',
+                        'white': 'Pearl White Multi-Coat'
+                    },
+                    'battery': {
+                        'standard': 'Standard',
+                        'long': 'Long Range'
+                    }
+                },
+                'es_ES': {
+                    'thou_sep': '.',
+                    'yes': 'Sí',
+                    'no': 'No',
+                    'included': 'Incluido',
+                    'wheels': {
+                        'aero': 'Aero',
+                        'sport': 'Sport',
+                    },
+                    'paint': {
+                        'black': 'Negro sólido',
+                        'blue': 'Azul oscuro metálico',
+                        'red': 'Red Multi-Coat',
+                        'silver': 'Plateado metálico',
+                        'midnight': 'Plateado metálico medianoche',
+                        'white': 'Pearl White Multi-Coat'
+                    },
+                    'battery': {
+                        'standard': 'Estándar',
+                        'long': 'Largo alcance'
+                    }
+                }
+            };
+
+            var number_format = function(x, t) {
+                return x.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, t);
+            };
+            var currency_format = function(amount) {
+                return (currency == 'usd' ? '$' : '') +
+                        number_format(amount, lang[current_lang].thou_sep) +
+                        (currency == 'eur' ? '€' : '');
+            };
 
             $('.color .button').click(function() {
                 if ($(this).hasClass('black')) {
@@ -227,7 +346,7 @@
                 $('.color .button.selected').removeClass('selected');
                 $(this).addClass('selected');
                 update_data();
-                update_price();
+                update_total();
             });
             $('.wheels .button').click(function() {
                 if ($(this).hasClass('aero')) {
@@ -239,7 +358,7 @@
                 $('.wheels .button.selected').removeClass('selected');
                 $(this).addClass('selected');
                 update_data();
-                update_price();
+                update_total();
             });
             $('.data .premium .modify').click(function() {
                 if ($(this).hasClass('add')) {
@@ -252,7 +371,7 @@
                     $(this).addClass('add');
                 }
                 update_data();
-                update_price();
+                update_total();
             });
             $('.data .battery .modify').click(function() {
                 if ($(this).hasClass('add')) {
@@ -265,7 +384,7 @@
                     $(this).addClass('add');
                 }
                 update_data();
-                update_price();
+                update_total();
             });
             $('.data .autopilot .modify').click(function() {
                 if ($(this).hasClass('add')) {
@@ -284,7 +403,7 @@
                     }
                 }
                 update_data();
-                update_price();
+                update_total();
             });
             $('.data .self_driving .modify').click(function() {
                 if ($(this).hasClass('add')) {
@@ -303,99 +422,150 @@
                     $(this).addClass('add');
                 }
                 update_data();
-                update_price();
+                update_total();
+            });
+            $('.data .dual .modify').click(function() {
+                if ($(this).hasClass('add')) {
+                    dual = true;
+                    $(this).removeClass('add');
+                    $(this).addClass('remove');
+                } else {
+                    dual = false;
+                    $(this).removeClass('remove');
+                    $(this).addClass('add');
+
+                    if (performance) {
+                        performance = false;
+                        $('.data .performance .modify').removeClass('remove');
+                        $('.data .performance .modify').addClass('add');
+                    }
+                }
+                update_data();
+                update_total();
+            });
+            $('.data .performance .modify').click(function() {
+                if ($(this).hasClass('add')) {
+                    performance = true;
+                    $(this).removeClass('add');
+                    $(this).addClass('remove');
+
+                    if (!dual) {
+                        dual = true;
+                        $('.data .dual .modify').removeClass('add');
+                        $('.data .dual .modify').addClass('remove');
+                    }
+                } else {
+                    performance = false;
+                    $(this).removeClass('remove');
+                    $(this).addClass('add');
+                }
+                update_data();
+                update_total();
+            });
+            // Currency and language change:
+            $('nav.currency:not(.open) .selected').click(function() {
+                $('nav.currency').addClass('open');
+                $(this).removeClass('selected');
+
+                $('nav.currency.open li').click(function() {
+                    $(this).addClass('selected');
+                    $('nav.currency').removeClass('open');
+                    currency = $(this).data('currency');
+
+                    update_currency();
+                    update_data();
+                    update_total();
+                });
+            });
+            $('nav.language:not(.open) .selected').click(function() {
+                $('nav.language').addClass('open');
+                $(this).removeClass('selected');
+
+                $('nav.language.open li').click(function() {
+                    $(this).addClass('selected');
+                    $('nav.language').removeClass('open');
+                    language = $(this).data('lang');
+
+                    update_currency();
+                    update_data();
+                    update_total();
+                });
             });
 
+            var update_currency = function() {
+                var color_price = color == 'black' ?
+                                    lang[current_lang].included :
+                                    '+' + currency_format(prices[currency].paint[color]) + (currency == 'usd' ? '' : '**');
+                $('.data .color .price').text(color_price);
+
+                var wheels_price = wheels == 'aero' ?
+                                    lang[current_lang].included :
+                                    '+' + currency_format(prices[currency].wheels[wheels]) + (currency == 'usd' ? '' : '**');
+                $('.data .wheels .price').text(wheels_price);
+
+                $('.data .premium .price').text('+' + currency_format(prices[currency].premium) + (currency == 'usd' ? '' : '**'));
+
+                var battery_price = battery == 'standard' ?
+                                    lang[current_lang].included :
+                                    '+' + currency_format(prices[currency].battery[battery]) + (currency == 'usd' ? '' : '**');
+                $('.data .battery .price').text(battery_price);
+
+                $('.data .autopilot .price').text('+' + currency_format(prices[currency].autopilot) + (currency == 'usd' ? '' : '**'));
+                $('.data .self_driving .price').text('+' + currency_format(prices[currency].self_driving) + (currency == 'usd' ? '' : '**'));
+                $('.data .dual .price').text('+' + currency_format(prices[currency].premium) + '**');
+                $('.data .performance .price').text('+' + currency_format(prices[currency].performance) + '**');
+            };
 
             var update_image = function() {
                 $('img.car').attr('src', 'img/' + color + '_' + wheels + '.png');
             };
             var update_data = function() {
-                var color_text = 'N/A';
-                if (color == 'black') {
-                    color_text = 'Solid Black';
-                } else if (color == 'blue') {
-                    color_text = 'Deep Blue Metallic';
-                } else if (color == 'red') {
-                    color_text = 'Red Multi-Coat';
-                } else if (color == 'silver') {
-                    color_text = 'Silver Metallic';
-                } else if (color == 'midnight') {
-                    color_text = 'Midnight Silver Metallic';
-                } else if (color == 'white') {
-                    color_text = 'Pearl White Multi-Coat';
-                }
-                $('.data .color .text').text(color_text);
+                $('.data .color .text').text(lang[current_lang].paint[color]);
+                $('.data .wheels .text').text(lang[current_lang].wheels[wheels]);
 
-                var wheels_text = 'N/A';
-                if (wheels == 'aero') {
-                    wheels_text = 'Aero';
-                } else if (wheels == 'sport') {
-                    wheels_text = 'Sport';
-                }
-                $('.data .wheels .text').text(wheels_text);
-
-                var premium_text = premium ? 'Yes' : 'No';
+                var premium_text = premium ? lang[current_lang].yes : lang[current_lang].no;
                 $('.data .premium .text').text(premium_text);
 
-                var battery_text = battery == 'long' ? 'Long Range' : 'Standard';
+                var battery_text = lang[current_lang].battery[battery];
                 $('.data .battery .text').text(battery_text);
 
-                var autopilot_text = autopilot ? 'Yes' : 'No';
+                var autopilot_text = autopilot ? lang[current_lang].yes : lang[current_lang].no;
                 $('.data .autopilot .text').text(autopilot_text);
 
-                var self_driving_text = self_driving ? 'Yes' : 'No';
+                var self_driving_text = self_driving ? lang[current_lang].yes : lang[current_lang].no;
                 $('.data .self_driving .text').text(self_driving_text);
+
+                var dual_text = dual ? lang[current_lang].yes : lang[current_lang].no;
+                $('.data .dual .text').text(dual_text);
+
+                var performance_text = performance ? lang[current_lang].yes : lang[current_lang].no;
+                $('.data .performance .text').text(performance_text);
             };
 
-            var update_price = function() {
-                var price = 35000;
+            var update_total = function() {
+                var price = prices[currency].base;
                 if (premium) {
-                    price += prices.usd.premium;
+                    price += prices[currency].premium;
                 }
                 if (autopilot) {
-                    price += prices.usd.autopilot;
+                    price += prices[currency].autopilot;
                 }
                 if (self_driving) {
-                    price += prices.usd.self_driving;
+                    price += prices[currency].self_driving;
                 }
-                price += prices.usd.wheels[wheels];
-                price += prices.usd.paint[color];
-                price += prices.usd.battery[battery];
+                if (dual) {
+                    price += prices[currency].dual;
+                }
+                if (performance) {
+                    price += prices[currency].performance;
+                }
+                price += prices[currency].wheels[wheels];
+                price += prices[currency].paint[color];
+                price += prices[currency].battery[battery];
 
-                $('.price h2 span').text('$' + number_format(price, ','));
+                $('.price h2 span').text(currency_format(price));
             };
         });
-
-        var prices = {
-            'usd': {
-                'wheels': {
-                    'aero': 0,
-                    'sport': 1500,
-                },
-                'paint': {
-                    'black': 0,
-                    'blue': 1000,
-                    'red': 1000,
-                    'silver': 1000,
-                    'midnight': 1000,
-                    'white': 1000
-                },
-                'battery': {
-                    'standard': 0,
-                    'long': 9000
-                },
-                'premium': 5000,
-                'autopilot': 5000,
-                'self_driving': 3000
-            }
-        };
-        var usd_to_eur = 0.849668;
-        var conversion_margin = 0.025;
-
-        var number_format = function(x, t) {
-            return x.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g, t);
-        };
         </script>
     </body>
 </html>
