@@ -146,6 +146,9 @@
                 clear: both;
                 margin-left: 50px;
             }
+            #import, #vat {
+                width: 5em;
+            }
             footer {
                 clear: both;
                 margin-top: 150px;
@@ -194,7 +197,11 @@
                 <p class="performance"><b>Performance mode***:</b> <span class="text">No</span> (<span class="price">+$15,000</span>**)<span class="modify add"></span></p>
             </section>
             <section class="price">
-                <h2>Total (no VAT): <span>$49,000</span></h2>
+                <p class="import"><label for="import">Import tax</label> (<input id="import" type="number" value="0" min="0" max="250" step="0.1">): <span class="price">$0</span></p>
+                <h3 class="total-no-vat">Total (no VAT): <span>$49,000</span></h3>
+                <p class="vat"><label for="vat">VAT</label> (<input id="vat" type="number" value="0" min="0" max="250" step="0.1">): <span class="price">$0</span></p>
+                <p class="incentive"><label for="incentive">Direct incentive</label>: -<span class="currency_symbol before">$</span><input id="incentive" type="number" value="0" min="0" max="100000" step="1"><span style="display:none" class="currency_symbol after">€</span></p>
+                <h2 class="total-vat">Total: <span>$49,000</span></h2>
             </section>
         </main>
         <footer>
@@ -209,6 +216,10 @@
             var currency = 'usd';
             var current_lang = 'en_US';
 
+            var import_tax = 1;
+            var vat = 1;
+            var incentive = 0;
+
             var color = 'black';
             var wheels = 'aero';
             var premium = true;
@@ -218,7 +229,7 @@
             var dual = false;
             var performance = false;
 
-            var usd_to_eur = 1/1.19324;
+            var usd_to_eur = 0.842964;
             var change_margin = 1.025;
 
             var prices = {
@@ -477,19 +488,35 @@
                     update_total();
                 });
             });
-            $('nav.language:not(.open) .selected').click(function() {
-                $('nav.language').addClass('open');
+            $('nav.lang:not(.open) .selected').click(function() {
+                console.log('clicked open');
+                $('nav.lang').addClass('open');
                 $(this).removeClass('selected');
 
-                $('nav.language.open li').click(function() {
+                $('nav.lang.open li').click(function() {
+                    console.log('clicked li');
                     $(this).addClass('selected');
-                    $('nav.language').removeClass('open');
-                    language = $(this).data('lang');
+                    $('nav.lang').removeClass('open');
+                    current_lang = $(this).data('lang');
 
                     update_currency();
+                    // update_language();
                     update_data();
                     update_total();
                 });
+            });
+
+            $('#import').change(function() {
+                import_tax = 1 + $(this).val()/100;
+                update_total();
+            });
+            $('#vat').change(function() {
+                vat = 1 + $(this).val()/100;
+                update_total();
+            });
+            $('#incentive').change(function() {
+                incentive = $(this).val();
+                update_total();
             });
 
             var update_currency = function() {
@@ -514,6 +541,14 @@
                 $('.data .self_driving .price').text('+' + currency_format(prices[currency].self_driving) + (currency == 'usd' ? '' : '**'));
                 $('.data .dual .price').text('+' + currency_format(prices[currency].premium) + '**');
                 $('.data .performance .price').text('+' + currency_format(prices[currency].performance) + '**');
+
+                if (currency == 'eur') {
+                    $('.currency_symbol.before').hide();
+                    $('.currency_symbol.after').show();
+                } else if (currency == 'usd') {
+                    $('.currency_symbol.after').hide();
+                    $('.currency_symbol.before').show();
+                }
             };
 
             var update_image = function() {
@@ -563,7 +598,17 @@
                 price += prices[currency].paint[color];
                 price += prices[currency].battery[battery];
 
-                $('.price h2 span').text(currency_format(price));
+                var import_price = price * (import_tax-1);
+                $('.price .import span').text(currency_format(import_price));
+
+                price = price + import_price;
+
+                $('.price h3 span').text(currency_format(price));
+
+                var vat_price = price * (vat-1);
+                $('.price .vat span').text(currency_format(vat_price));
+                var total_price = price * vat - incentive;
+                $('.price h2 span').text(currency_format(total_price));
             };
         });
         </script>
