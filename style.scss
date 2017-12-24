@@ -1,0 +1,213 @@
+$title-font: Helvetica, Arial, FreeSans, sans-serif;
+$text-font: Georgia, Nimbus Roman No9 L, serif;
+
+body,
+html {
+    margin: 0;
+    background-color: #fff;
+}
+
+h1 {
+    margin: 1em;
+
+    &,
+    h2,
+    h3,
+    h4 {
+        font-family: $title-font;
+    }
+}
+
+header nav {
+    float: right;
+    border-radius: 5px;
+    border: 1px solid #000;
+    cursor: pointer;
+    width: 215px;
+    margin: -75px 10px;
+    height: 53px;
+
+    &.currency {
+        margin-right: 230px;
+        width: 120px;
+    }
+
+    ul {
+        list-style-type: none;
+        padding: 0;
+
+        li {
+            display: none;
+            padding: 0 10px;
+
+            &.selected {
+                display: block;
+            }
+        }
+    }
+
+    &:not(.open) {
+        ul {
+            li {
+                &.selected {
+                    &::after {
+                        content: "↴";
+                        margin-left: 5px;
+                    }
+                }
+            }
+        }
+    }
+
+    &.open {
+        ul {
+            li {
+                display: block;
+
+                &:hover {
+                    background-color: #36f;
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    &.lang {
+        ul {
+            li {
+                padding-left: 45px;
+                background-position: 13px 3px;
+                background-repeat: no-repeat;
+                background-size: 25px;
+
+                &[data-lang="es_ES"] {
+                    background-image: url("img/es_ES.svg");
+                }
+
+                &[data-lang="en_US"] {
+                    background-image: url("img/en_US.svg");
+                }
+            }
+        }
+    }
+}
+
+.car {
+    width: 80%;
+    margin: -100px auto;
+    height: auto;
+    display: block;
+}
+
+section {
+    &.data {
+        width: 35%;
+        margin: 150px 0 0 50px;
+        clear: both;
+
+        .modify {
+            width: 10px;
+            height: 10px;
+            display: inline-block;
+            margin-left: 5px;
+            cursor: pointer;
+
+            &.add {
+                background-image: url("img/add.svg");
+            }
+
+            &.remove {
+                background-image: url("img/remove.svg");
+            }
+        }
+    }
+
+    &.color {
+        width: 50%;
+        margin: auto auto auto 20%;
+        text-align: center;
+        float: left;
+
+        .button {
+            display: inline-block;
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            border: 1px solid #000;
+            margin: 0.75em;
+            cursor: pointer;
+
+            &.black {
+                background-image: url("img/color_black.png");
+            }
+
+            &.midnight {
+                background-image: url("img/color_midnight.png");
+            }
+
+            &.silver {
+                background-image: url("img/color_silver.png");
+            }
+
+            &.white {
+                background-image: url("img/color_white.png");
+            }
+
+            &.red {
+                background-image: url("img/color_red.png");
+            }
+
+            &.blue {
+                background-image: url("img/color_blue.png");
+            }
+        }
+    }
+
+    .button {
+        &.selected {
+            border: 2px solid #f00;
+        }
+    }
+
+    &.wheels {
+        float: left;
+        width: 25%;
+        text-align: center;
+
+        .button {
+            display: inline-block;
+            width: 75px;
+            height: 75px;
+            background-color: #FFF;
+            border-radius: 50%;
+            border: 1px solid #000;
+            cursor: pointer;
+            margin: 0.75em;
+            background-size: 100%;
+
+            &.aero {
+                background-image: url("img/wheel_aero.png");
+            }
+
+            &.sport {
+                background-image: url("img/wheel_sport.png");
+            }
+        }
+    }
+
+    &.price {
+        clear: both;
+        margin-left: 50px;
+    }
+}
+
+#import,
+#vat {
+    width: 5em;
+}
+
+footer {
+    clear: both;
+    margin-top: 150px;
+    text-align: center;
+}
