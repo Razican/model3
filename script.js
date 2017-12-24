@@ -423,6 +423,15 @@ $(function() {
     };
     var update_data = function() {
         $('.data .color .text').text(lang[current_lang].paint[color]);
+        var color_price = color == 'black' ?
+                            lang[current_lang].included :
+                            '+' + currency_format(prices[currency].paint[color]) + (currency == 'usd' ? '' : '**');
+        $('.data .color .price').text(color_price);
+
+        var wheels_price = wheels == 'aero' ?
+                            lang[current_lang].included :
+                            '+' + currency_format(prices[currency].wheels[wheels]) + (currency == 'usd' ? '' : '**');
+        $('.data .wheels .price').text(wheels_price);
         $('.data .wheels .text').text(lang[current_lang].wheels[wheels]);
 
         var premium_text = premium ? lang[current_lang].yes : lang[current_lang].no;
