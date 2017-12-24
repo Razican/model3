@@ -479,7 +479,7 @@ $(function() {
 
         price = price + import_price;
 
-        $('.price h3 span.total_no_vat').text(currency_format(price));
+        $('.price h3.total-no-vat span.price').text(currency_format(price));
 
         var vat_price = price * (vat-1);
         $('.price .vat span.price').text(currency_format(vat_price));
