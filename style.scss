@@ -208,6 +208,13 @@ section {
 
 footer {
     clear: both;
-    margin-top: 150px;
+    margin-top: 50px;
     text-align: center;
+
+    .copyright {
+        img {
+            height: 1.5em;
+            width: auto;
+        }
+    }
 }
