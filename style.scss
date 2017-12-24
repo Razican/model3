@@ -163,12 +163,6 @@ section {
         }
     }
 
-    .button {
-        &.selected {
-            border: 2px solid #f00;
-        }
-    }
-
     &.wheels {
         float: left;
         width: 25%;
@@ -192,6 +186,12 @@ section {
             &.sport {
                 background-image: url("img/wheel_sport.png");
             }
+        }
+    }
+
+    .button {
+        &.selected {
+            border: 2px solid #f00;
         }
     }
 
