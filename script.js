@@ -44,28 +44,28 @@ $(function() {
             'performance': 15000
         },
         'eur': {
-            'base': Math.round(35000*usd_to_eur*change_margin),
+            'base': Math.round(35000 * usd_to_eur * change_margin),
             'wheels': {
                 'aero': 0,
-                'sport': Math.round(1500*usd_to_eur*change_margin),
+                'sport': Math.round(1500 * usd_to_eur * change_margin),
             },
             'paint': {
                 'black': 0,
-                'blue': Math.round(1000*usd_to_eur*change_margin),
-                'red': Math.round(1000*usd_to_eur*change_margin),
-                'silver': Math.round(1000*usd_to_eur*change_margin),
-                'midnight': Math.round(1000*usd_to_eur*change_margin),
-                'white': Math.round(1000*usd_to_eur*change_margin)
+                'blue': Math.round(1000 * usd_to_eur * change_margin),
+                'red': Math.round(1000 * usd_to_eur * change_margin),
+                'silver': Math.round(1000 * usd_to_eur * change_margin),
+                'midnight': Math.round(1000 * usd_to_eur * change_margin),
+                'white': Math.round(1000 * usd_to_eur * change_margin)
             },
             'battery': {
                 'standard': 0,
-                'long': Math.round(9000*usd_to_eur*change_margin)
+                'long': Math.round(9000 * usd_to_eur * change_margin)
             },
-            'premium': Math.round(5000*usd_to_eur*change_margin),
-            'autopilot': Math.round(5000*usd_to_eur*change_margin),
-            'self_driving': Math.round(3000*usd_to_eur*change_margin),
-            'dual': Math.round(4500*usd_to_eur*change_margin),
-            'performance': Math.round(15000*usd_to_eur*change_margin)
+            'premium': Math.round(5000 * usd_to_eur * change_margin),
+            'autopilot': Math.round(5000 * usd_to_eur * change_margin),
+            'self_driving': Math.round(3000 * usd_to_eur * change_margin),
+            'dual': Math.round(4500 * usd_to_eur * change_margin),
+            'performance': Math.round(15000 * usd_to_eur * change_margin)
         }
     };
 
@@ -171,8 +171,8 @@ $(function() {
     };
     var currency_format = function(amount) {
         return (currency == 'usd' ? '$' : '') +
-                number_format(amount, lang[current_lang].thou_sep) +
-                (currency == 'eur' ? '€' : '');
+            number_format(amount, lang[current_lang].thou_sep) +
+            (currency == 'eur' ? '€' : '');
     };
 
     $('.color .button').click(function() {
@@ -347,11 +347,11 @@ $(function() {
     });
 
     $('#import').change(function() {
-        import_tax = 1 + $(this).val()/100;
+        import_tax = 1 + $(this).val() / 100;
         update_total();
     });
     $('#vat').change(function() {
-        vat = 1 + $(this).val()/100;
+        vat = 1 + $(this).val() / 100;
         update_total();
     });
     $('#incentive').change(function() {
@@ -361,20 +361,20 @@ $(function() {
 
     var update_currency = function() {
         var color_price = color == 'black' ?
-                            lang[current_lang].included :
-                            '+' + currency_format(prices[currency].paint[color]) + (currency == 'usd' ? '' : '**');
+            lang[current_lang].included :
+            '+' + currency_format(prices[currency].paint[color]) + (currency == 'usd' ? '' : '**');
         $('.data .color .price').text(color_price);
 
         var wheels_price = wheels == 'aero' ?
-                            lang[current_lang].included :
-                            '+' + currency_format(prices[currency].wheels[wheels]) + (currency == 'usd' ? '' : '**');
+            lang[current_lang].included :
+            '+' + currency_format(prices[currency].wheels[wheels]) + (currency == 'usd' ? '' : '**');
         $('.data .wheels .price').text(wheels_price);
 
         $('.data .premium .price').text('+' + currency_format(prices[currency].premium) + (currency == 'usd' ? '' : '**'));
 
         var battery_price = battery == 'standard' ?
-                            lang[current_lang].included :
-                            '+' + currency_format(prices[currency].battery[battery]) + (currency == 'usd' ? '' : '**');
+            lang[current_lang].included :
+            '+' + currency_format(prices[currency].battery[battery]) + (currency == 'usd' ? '' : '**');
         $('.data .battery .price').text(battery_price);
 
         $('.data .autopilot .price').text('+' + currency_format(prices[currency].autopilot) + (currency == 'usd' ? '' : '**'));
@@ -424,13 +424,13 @@ $(function() {
     var update_data = function() {
         $('.data .color .text').text(lang[current_lang].paint[color]);
         var color_price = color == 'black' ?
-                            lang[current_lang].included :
-                            '+' + currency_format(prices[currency].paint[color]) + (currency == 'usd' ? '' : '**');
+            lang[current_lang].included :
+            '+' + currency_format(prices[currency].paint[color]) + (currency == 'usd' ? '' : '**');
         $('.data .color .price').text(color_price);
 
         var wheels_price = wheels == 'aero' ?
-                            lang[current_lang].included :
-                            '+' + currency_format(prices[currency].wheels[wheels]) + (currency == 'usd' ? '' : '**');
+            lang[current_lang].included :
+            '+' + currency_format(prices[currency].wheels[wheels]) + (currency == 'usd' ? '' : '**');
         $('.data .wheels .price').text(wheels_price);
         $('.data .wheels .text').text(lang[current_lang].wheels[wheels]);
 
@@ -474,14 +474,14 @@ $(function() {
         price += prices[currency].paint[color];
         price += prices[currency].battery[battery];
 
-        var import_price = price * (import_tax-1);
+        var import_price = price * (import_tax - 1);
         $('.price .import span').text(currency_format(import_price));
 
         price = price + import_price;
 
         $('.price h3.total-no-vat span.price').text(currency_format(price));
 
-        var vat_price = price * (vat-1);
+        var vat_price = price * (vat - 1);
         $('.price .vat span.price').text(currency_format(vat_price));
         var total_price = price * vat - incentive;
         $('.price h2 span.price').text(currency_format(total_price));
