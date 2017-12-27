@@ -90,8 +90,8 @@ $(function() {
                 'white': 'Pearl White Multi-Coat'
             },
             'battery': {
-                'standard': 'Standard',
-                'long': 'Long Range'
+                'standard': 'Standard (220 miles)',
+                'long': 'Long Range (310 miles)'
             },
             'data': {
                 'color': 'Color',
@@ -137,8 +137,8 @@ $(function() {
                 'white': 'Pearl White Multi-Coat'
             },
             'battery': {
-                'standard': 'Estándar',
-                'long': 'Largo alcance'
+                'standard': 'Estándar (354 km)',
+                'long': 'Largo alcance (499 km)'
             },
             'data': {
                 'color': 'Color',
