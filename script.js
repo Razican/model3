@@ -15,7 +15,7 @@ $(function() {
     var dual = false;
     var performance = false;
 
-    var usd_to_eur = 0.840883;
+    var usd_to_eur = 0.804723;
     var change_margin = 1.035;
 
     var prices = {
@@ -486,4 +486,86 @@ $(function() {
         var total_price = price * vat - incentive;
         $('.price h2 span.price').text(currency_format(total_price));
     };
+
+    var setupValue = function(key, value) {
+        key = key.trim();
+        value = value.trim();
+        switch (key) {
+            case "currency":
+                if (typeof prices[value] !== 'undefined') {
+                    currency = value;
+                }
+            break;
+            case "current_lang":
+                if (typeof lang[value] !== 'undefined') {
+                    current_lang = value;
+                }
+            break;
+            case "import_tax":
+                value = Number.parseFloat(value);
+                if (value >= 0) {
+                    import_tax = value;
+                }
+            break;
+            case "vat":
+                value = Number.parseFloat(value);
+                if (value >= 0) {
+                    vat = value;
+                }
+            break;
+            case "incentive":
+                value = Number.parseFloat(value);
+                if (value >= 0) {
+                    incentive = value;
+                }
+            break;
+            case "color":
+                if (typeof prices[current_lang].paint[value] !== 'undefined') {
+                    color = value;
+                }
+            break;
+            case "wheels":
+                if (typeof prices[current_lang].wheels[value] !== 'undefined') {
+                    wheels = value;
+                }
+            break;
+            case "premium":
+                // TODO parse boolean
+            break;
+            case "battery":
+                if (typeof prices[current_lang].battery[value] !== 'undefined') {
+                    color = value;
+                }
+            break;
+            case "autopilot":
+                // TODO parse boolean
+            break;
+            case "self_driving":
+                // TODO parse boolean
+            break;
+            case "dual":
+                // TODO parse boolean
+            break;
+            case "performance":
+                // TODO parse boolean
+            break;
+        }
+    };
+
+    // Check if any parameters were provided and update UI.
+    var queryString = document.documentURI.split('?')
+    if (typeof queryString[1] !== 'undefined') {
+        queryString = queryString[1].split('&');
+
+        for (i in queryString) {
+            var queryParam = queryString[i].split('=');
+            setupValue(queryParam[0], queryParam[1]);
+        }
+
+        update_image();
+        update_currency();
+        update_language();
+        update_data();
+        update_total();
+    }
 });
