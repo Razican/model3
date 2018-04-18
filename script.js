@@ -15,8 +15,8 @@ $(function() {
     var dual = false;
     var performance = false;
 
-    var usd_to_eur = 0.804723;
-    var change_margin = 1.035;
+    var usd_to_eur = 0.807483;
+    var change_margin = 1.03;
 
     var prices = {
         'usd': {
