@@ -1,24 +1,26 @@
 <DOCTYPE html>
-<html lang="en">
+    <html lang="en">
+
     <head>
         <title>Tesla Model 3 calculator</title>
         <meta charset="UTF-8">
         <link rel="stylesheet" type="text/css" href="style.min.css">
     </head>
+
     <body>
         <header>
             <h1>Configure your Tesla Model 3</h1>
             <nav class="lang">
-              <ul>
-                <li data-lang="en_US" class="selected">English (USA)</li>
-                <li data-lang="es_ES">Español (España)</li>
-              </ul>
+                <ul>
+                    <li data-lang="en_US" class="selected">English (USA)</li>
+                    <li data-lang="es_ES">Español (España)</li>
+                </ul>
             </nav>
             <nav class="currency">
-              <ul>
-                <li data-currency="usd" class="selected">USD ($)</li>
-                <li data-currency="eur">EUR (€)**</li>
-              </ul>
+                <ul>
+                    <li data-currency="usd" class="selected">USD ($)</li>
+                    <li data-currency="eur">EUR (€)**</li>
+                </ul>
             </nav>
         </header>
         <main>
@@ -36,30 +38,110 @@
                 <div class="button sport"></div>
             </section>
             <section class="data">
-                <p class="color"><b><span class="title">Color</span>:</b> <span class="text">Solid Black</span> (<span class="price">Included</span>)</p>
-                <p class="wheels"><b><span class="title">Wheels</span>:</b> <span class="text">Aero</span> (<span class="price">Included</span>)</p>
-                <p class="premium"><b><span class="title">Premium Upgrades</span>:</b> <span class="text">Yes</span> (<span class="price">+$5,000</span>)<span class="modify remove"></span></p>
-                <p class="battery"><b><span class="title">Battery</span>:</b> <span class="text">Long Range (310 miles)</span> (<span class="price">+$9,000</span>)<span class="modify remove"></span></p>
-                <p class="autopilot"><b><span class="title">Enhanced Autopilot</span>:</b> <span class="text">No</span> (<span class="price">+$5,000</span>)<span class="modify add"></span></p>
-                <p class="self_driving"><b><span class="title">Full Self-Driving</span>*:</b> <span class="text">No</span> (<span class="price">+$3,000</span>)<span class="modify add"></span></p>
-                <p class="dual"><b><span class="title">Dual Motors</span>:</b> <span class="text">No</span> (<span class="price">+$4,500</span>**)<span class="modify add"></span></p>
-                <p class="performance"><b><span class="title">Max Performance</span>***:</b> <span class="text">No</span> (<span class="price">+$15,000</span>**)<span class="modify add"></span></p>
+                <p class="color">
+                    <b>
+                        <span class="title">Color</span>:</b>
+                    <span class="text">Solid Black</span> (
+                    <span class="price">Included</span>)</p>
+                <p class="wheels">
+                    <b>
+                        <span class="title">Wheels</span>:</b>
+                    <span class="text">Aero</span> (
+                    <span class="price">Included</span>)</p>
+                <p class="premium">
+                    <b>
+                        <span class="title">Premium Upgrades</span>:</b>
+                    <span class="text">Yes</span> (
+                    <span class="price">+$5,000</span>)
+                    <span class="modify remove"></span>
+                </p>
+                <p class="battery">
+                    <b>
+                        <span class="title">Battery</span>:</b>
+                    <span class="text">Long Range (310 miles)</span> (
+                    <span class="price">+$9,000</span>)
+                    <span class="modify remove"></span>
+                </p>
+                <p class="autopilot">
+                    <b>
+                        <span class="title">Enhanced Autopilot</span>:</b>
+                    <span class="text">No</span> (
+                    <span class="price">+$5,000</span>)
+                    <span class="modify add"></span>
+                </p>
+                <p class="self_driving">
+                    <b>
+                        <span class="title">Full Self-Driving</span>*:</b>
+                    <span class="text">No</span> (
+                    <span class="price">+$3,000</span>)
+                    <span class="modify add"></span>
+                </p>
+                <p class="dual">
+                    <b>
+                        <span class="title">Dual Motors</span>:</b>
+                    <span class="text">No</span> (
+                    <span class="price">+$5,000</span>)
+                    <span class="modify add"></span>
+                </p>
+                <p class="performance">
+                    <b>
+                        <span class="title">Max Performance</span>***:</b>
+                    <span class="text">No</span> (
+                    <span class="price">+$23,000</span>**)
+                    <span class="modify add"></span>
+                </p>
             </section>
             <section class="price">
-                <p class="import"><label for="import">Import Tax</label> (<input id="import" type="number" value="0" min="0" max="250" step="0.1">%): <span class="price">$0</span></p>
-                <h3 class="total-no-vat"><span class="title">Total (no VAT)</span>: <span class="price">$49,000</span></h3>
-                <p class="vat"><label for="vat">VAT</label> (<input id="vat" type="number" value="0" min="0" max="250" step="0.1">%): <span class="price">$0</span></p>
-                <p class="incentive"><label for="incentive">Direct incentive</label>: -<span class="currency_symbol before">$</span><input id="incentive" type="number" value="0" min="0" max="100000" step="1"><span style="display:none" class="currency_symbol after">€</span></p>
-                <h2 class="total-vat"><span class="title">Total</span>: <span class="price">$49,000</span></h2>
+                <p class="import">
+                    <label for="import">Import Tax</label> (
+                    <input id="import" type="number" value="0" min="0" max="250" step="0.1">%):
+                    <span class="price">$0</span>
+                </p>
+                <h3 class="total-no-vat">
+                    <span class="title">Total (no VAT)</span>:
+                    <span class="price">$49,000</span>
+                </h3>
+                <p class="vat">
+                    <label for="vat">VAT</label> (
+                    <input id="vat" type="number" value="0" min="0" max="250" step="0.1">%):
+                    <span class="price">$0</span>
+                </p>
+                <p class="incentive">
+                    <label for="incentive">Direct incentive</label>: -
+                    <span class="currency_symbol before">$</span>
+                    <input id="incentive" type="number" value="0" min="0" max="100000" step="1">
+                    <span style="display:none" class="currency_symbol after">€</span>
+                </p>
+                <h2 class="total-vat">
+                    <span class="title">Total</span>:
+                    <span class="price">$49,000</span>
+                </h2>
             </section>
         </main>
         <footer>
-            <p class="note self-driving"><b>*<span class="title">Note</span>:</b> <span class="text">Full Self-Driving requires Enhanced Autopilot</span>.</p>
-            <p class="note price"><b>**<span class="title">Note</span>:</b> <span class="text">Tentative price, not officially released by Tesla</span>.</p>
-            <p class="note performance"><b>***<span class="title">Note</span>:</b> <span class="text">Performance mode requires dual motors</span>.</p>
-            <p class="copyright">Copyright © 2017-2018 - Iban Eguia Moraza <a href="https://github.com/Razican/model3" title="Fork in GitHub"><img src="img/github.png" alt="GitHub logo"></a> <a href="https://www.linkedin.com/in/razican" title="Iban Eguia in LinkedIn"><img src="img/linkedin.png" alt="LinkedIn logo"></a></p>
+            <p class="note self-driving">
+                <b>*
+                    <span class="title">Note</span>:</b>
+                <span class="text">Full Self-Driving requires Enhanced Autopilot</span>.</p>
+            <p class="note price">
+                <b>**
+                    <span class="title">Note</span>:</b>
+                <span class="text">Tentative price, not officially released by Tesla</span>.</p>
+            <p class="note performance">
+                <b>***
+                    <span class="title">Note</span>:</b>
+                <span class="text">Performance mode requires dual motors and long range battery</span>.</p>
+            <p class="copyright">Copyright © 2017-2018 - Iban Eguia Moraza
+                <a href="https://github.com/Razican/model3" title="Fork in GitHub">
+                    <img src="img/github.png" alt="GitHub logo">
+                </a>
+                <a href="https://www.linkedin.com/in/razican" title="Iban Eguia in LinkedIn">
+                    <img src="img/linkedin.png" alt="LinkedIn logo">
+                </a>
+            </p>
         </footer>
         <script src="jquery-3.3.1.slim.min.js"></script>
         <script src="script.min.js"></script>
     </body>
-</html>
+
+    </html>

@@ -41,7 +41,7 @@ $(function () {
             'autopilot': 5000,
             'self_driving': 3000,
             'dual': 5000,
-            'performance': 15000
+            'performance': 23000
         },
         'eur': {
             'base': Math.round(35000 * usd_to_eur * change_margin),
@@ -65,7 +65,7 @@ $(function () {
             'autopilot': Math.round(5000 * usd_to_eur * change_margin),
             'self_driving': Math.round(3000 * usd_to_eur * change_margin),
             'dual': Math.round(5000 * usd_to_eur * change_margin),
-            'performance': Math.round(15000 * usd_to_eur * change_margin)
+            'performance': Math.round(23000 * usd_to_eur * change_margin)
         }
     };
 
@@ -175,6 +175,10 @@ $(function () {
             (currency == 'eur' ? '€' : '');
     };
 
+    var add_class = 'add';
+    var remove_class = 'remove';
+    var selected_class = 'selected';
+
     $('.color .button').click(function () {
         if ($(this).hasClass('black')) {
             color = 'black';
@@ -190,8 +194,8 @@ $(function () {
             color = 'white';
         }
         update_image();
-        $('.color .button.selected').removeClass('selected');
-        $(this).addClass('selected');
+        $('.color .button.selected').removeClass(selected_class);
+        $(this).addClass(selected_class);
         update_data();
         update_total();
     });
@@ -202,33 +206,41 @@ $(function () {
             wheels = 'sport';
         }
         update_image();
-        $('.wheels .button.selected').removeClass('selected');
-        $(this).addClass('selected');
+        $('.wheels .button.selected').removeClass(selected_class);
+        $(this).addClass(selected_class);
         update_data();
         update_total();
     });
     $('.data .premium .modify').click(function () {
-        if ($(this).hasClass('add')) {
+        if ($(this).hasClass(add_class)) {
             premium = true;
-            $(this).removeClass('add');
-            $(this).addClass('remove');
+            $(this).removeClass(add_class);
+            $(this).addClass(remove_class);
         } else {
             premium = false;
-            $(this).removeClass('remove');
-            $(this).addClass('add');
+            $(this).removeClass(remove_class);
+            $(this).addClass(add_class);
         }
         update_data();
         update_total();
     });
-    $('.data .battery .modify').click(function () {
-        if ($(this).hasClass('add')) {
+    var performance_modify_selector = '.data .performance .modify';
+    var battery_modify_selector = '.data .battery .modify';
+    $(battery_modify_selector).click(function () {
+        if ($(this).hasClass(add_class)) {
             battery = 'long';
-            $(this).removeClass('add');
-            $(this).addClass('remove');
+            $(this).removeClass(add_class);
+            $(this).addClass(remove_class);
         } else {
             battery = 'standard';
-            $(this).removeClass('remove');
-            $(this).addClass('add');
+            $(this).removeClass(remove_class);
+            $(this).addClass(add_class);
+
+            if (performance) {
+                performance = false;
+                $(performance_modify_selector).removeClass(remove_class);
+                $(performance_modify_selector).addClass(add_class);
+            }
         }
         update_data();
         update_total();
@@ -236,104 +248,109 @@ $(function () {
     var autopilot_modify_selector = '.data .autopilot .modify';
     var self_driving_modify_selector = '.data .self_driving .modify';
     $(autopilot_modify_selector).click(function () {
-        if ($(this).hasClass('add')) {
+        if ($(this).hasClass(add_class)) {
             autopilot = true;
-            $(this).removeClass('add');
-            $(this).addClass('remove');
+            $(this).removeClass(add_class);
+            $(this).addClass(remove_class);
         } else {
             autopilot = false;
-            $(this).removeClass('remove');
-            $(this).addClass('add');
+            $(this).removeClass(remove_class);
+            $(this).addClass(add_class);
 
             if (self_driving) {
                 self_driving = false;
-                $(self_driving_modify_selector).removeClass('remove');
-                $(self_driving_modify_selector).addClass('add');
+                $(self_driving_modify_selector).removeClass(remove_class);
+                $(self_driving_modify_selector).addClass(add_class);
             }
         }
         update_data();
         update_total();
     });
     $(self_driving_modify_selector).click(function () {
-        if ($(this).hasClass('add')) {
+        if ($(this).hasClass(add_class)) {
             self_driving = true;
-            $(this).removeClass('add');
-            $(this).addClass('remove');
+            $(this).removeClass(add_class);
+            $(this).addClass(remove_class);
 
             if (!autopilot) {
                 autopilot = true;
-                $(autopilot_modify_selector).removeClass('add');
-                $(autopilot_modify_selector).addClass('remove');
+                $(autopilot_modify_selector).removeClass(add_class);
+                $(autopilot_modify_selector).addClass(remove_class);
             }
         } else {
             self_driving = false;
-            $(this).removeClass('remove');
-            $(this).addClass('add');
+            $(this).removeClass(remove_class);
+            $(this).addClass(add_class);
         }
         update_data();
         update_total();
     });
     var dual_modify_selector = '.data .dual .modify';
-    var performance_modify_selector = '.data .performance .modify';
     $(dual_modify_selector).click(function () {
-        if ($(this).hasClass('add')) {
+        if ($(this).hasClass(add_class)) {
             dual = true;
-            $(this).removeClass('add');
-            $(this).addClass('remove');
+            $(this).removeClass(add_class);
+            $(this).addClass(remove_class);
         } else {
             dual = false;
-            $(this).removeClass('remove');
-            $(this).addClass('add');
+            $(this).removeClass(remove_class);
+            $(this).addClass(add_class);
 
             if (performance) {
                 performance = false;
-                $(performance_modify_selector).removeClass('remove');
-                $(performance_modify_selector).addClass('add');
+                $(performance_modify_selector).removeClass(remove_class);
+                $(performance_modify_selector).addClass(add_class);
             }
         }
         update_data();
         update_total();
     });
     $(performance_modify_selector).click(function () {
-        if ($(this).hasClass('add')) {
+        if ($(this).hasClass(add_class)) {
             performance = true;
-            $(this).removeClass('add');
-            $(this).addClass('remove');
+            $(this).removeClass(add_class);
+            $(this).addClass(remove_class);
 
             if (!dual) {
                 dual = true;
-                $(dual_modify_selector).removeClass('add');
-                $(dual_modify_selector).addClass('remove');
+                $(dual_modify_selector).removeClass(add_class);
+                $(dual_modify_selector).addClass(remove_class);
+            }
+            if (battery === 'standard') {
+                battery = 'long';
+                $(battery_modify_selector).removeClass(add_class);
+                $(battery_modify_selector).addClass(remove_class);
             }
         } else {
             performance = false;
-            $(this).removeClass('remove');
-            $(this).addClass('add');
+            $(this).removeClass(remove_class);
+            $(this).addClass(add_class);
         }
         update_data();
         update_total();
     });
     // Currency and language change:
     var currency_selector = 'nav.currency';
+    var open_class = 'open';
     $('nav.currency li').click(function () {
-        if ($(currency_selector).hasClass('open')) {
-            $(this).addClass('selected');
-            $(currency_selector).removeClass('open');
+        if ($(currency_selector).hasClass(open_class)) {
+            $(this).addClass(selected_class);
+            $(currency_selector).removeClass(open_class);
             currency = $(this).data('currency');
 
             update_currency();
             update_data();
             update_total();
         } else {
-            $(currency_selector).addClass('open');
-            $(this).removeClass('selected');
+            $(currency_selector).addClass(open_class);
+            $(this).removeClass(selected_class);
         }
     });
     var lang_selector = 'nav.lang';
     $('nav.lang li').click(function () {
-        if ($(lang_selector).hasClass('open')) {
-            $(this).addClass('selected');
-            $(lang_selector).removeClass('open');
+        if ($(lang_selector).hasClass(open_class)) {
+            $(this).addClass(selected_class);
+            $(lang_selector).removeClass(open_class);
             current_lang = $(this).data('lang');
 
             update_currency();
@@ -341,8 +358,8 @@ $(function () {
             update_data();
             update_total();
         } else {
-            $(lang_selector).addClass('open');
-            $(this).removeClass('selected');
+            $(lang_selector).addClass(open_class);
+            $(this).removeClass(selected_class);
         }
     });
 
