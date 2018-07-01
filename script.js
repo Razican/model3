@@ -32,8 +32,9 @@ $(function () {
     var self_driving = false;
     var dual = false;
     var performance = false;
+    var performance_upgrade = false;
 
-    var usd_to_eur = 0.86077;
+    var usd_to_eur = 0.855544;
     var change_margin = 1.03;
 
     var prices = {
@@ -46,21 +47,22 @@ $(function () {
             'paint': {
                 'black': 0,
                 'blue': 1000,
-                'red': 1000,
+                'red': 1500,
                 'silver': 1000,
                 'midnight': 1000,
-                'white': 1000
+                'white': 1500
             },
             'battery': {
                 'standard': 0,
                 'long': 9000
             },
             'premium': 5000,
-            'white_interior':1500,
+            'white_interior': 1500,
             'autopilot': 5000,
             'self_driving': 3000,
             'dual': 4000,
-            'performance': 23000
+            'performance': 11000,
+            'performance_upgrade': 5000
         },
         'eur': {
             'base': Math.round(35000 * usd_to_eur * change_margin),
@@ -71,10 +73,10 @@ $(function () {
             'paint': {
                 'black': 0,
                 'blue': Math.round(1000 * usd_to_eur * change_margin),
-                'red': Math.round(1000 * usd_to_eur * change_margin),
+                'red': Math.round(1500 * usd_to_eur * change_margin),
                 'silver': Math.round(1000 * usd_to_eur * change_margin),
                 'midnight': Math.round(1000 * usd_to_eur * change_margin),
-                'white': Math.round(1000 * usd_to_eur * change_margin)
+                'white': Math.round(1500 * usd_to_eur * change_margin)
             },
             'battery': {
                 'standard': 0,
@@ -85,7 +87,8 @@ $(function () {
             'autopilot': Math.round(5000 * usd_to_eur * change_margin),
             'self_driving': Math.round(3000 * usd_to_eur * change_margin),
             'dual': Math.round(4000 * usd_to_eur * change_margin),
-            'performance': Math.round(5000 * usd_to_eur * change_margin)
+            'performance': Math.round(11000 * usd_to_eur * change_margin),
+            'performance_upgrade': Math.round(5000 * usd_to_eur * change_margin),
         }
     };
 
@@ -121,8 +124,9 @@ $(function () {
                 'battery': 'Battery',
                 'autopilot': 'Enhanced Autopilot',
                 'self_driving': 'Full Self-Driving',
-                'dual': 'Dual Motors',
-                'performance': 'Max Performance'
+                'dual': 'All Wheel Drive',
+                'performance': 'Performance',
+                'performance_upgrade': 'Performance Upgrade',
             },
             'form': {
                 'import': 'Import Tax',
@@ -135,7 +139,7 @@ $(function () {
                 'title': 'Note',
                 'self_driving': 'Full Self-Driving requires Enhanced Autopilot',
                 'price': 'Tentative price, not officially released by Tesla',
-                'performance': 'Performance mode requires dual motors'
+                'performance': 'Performance requires all wheel drive'
             }
         },
         'es_ES': {
@@ -170,7 +174,8 @@ $(function () {
                 'autopilot': 'Piloto automático mejorado',
                 'self_driving': 'Conducción autónoma',
                 'dual': 'Tracción integral',
-                'performance': 'Máximo rendimiento'
+                'performance': 'Máximo rendimiento',
+                'performance_upgrade': 'Mejoras para máximo rendimiento',
             },
             'form': {
                 'import': 'Tasas de importación',
@@ -222,11 +227,20 @@ $(function () {
         update_total();
     });
 
+    var performance_upgrade_modify_selector = ".data .performance_upgrade .modify";
     $('.wheels .button').click(function () {
         if ($(this).hasClass(aero)) {
             wheels = aero;
+
+            if (performance_upgrade) {
+                $(performance_upgrade_modify_selector).click();
+            }
         } else if ($(this).hasClass(sport)) {
             wheels = sport;
+
+            if (performance && !performance_upgrade) {
+                $(performance_upgrade_modify_selector).click();
+            }
         }
         update_image();
         $('.wheels .button.selected').removeClass(selected_class);
@@ -240,12 +254,6 @@ $(function () {
         if (premium) {
             $(this).removeClass(remove_class);
             $(this).addClass(add_class);
-
-            if (white_interior) {
-                white_interior = false;
-                $(white_interior_modify_selector).removeClass(remove_class);
-                $(white_interior_modify_selector).addClass(add_class)
-            }
         } else {
             $(this).removeClass(add_class);
             $(this).addClass(remove_class);
@@ -255,6 +263,7 @@ $(function () {
         update_total();
     });
 
+    var performance_modify_selector = '.data .performance .modify';
     $(white_interior_modify_selector).click(function () {
         if (white_interior) {
             $(this).removeClass(remove_class);
@@ -262,13 +271,16 @@ $(function () {
         } else {
             $(this).removeClass(add_class);
             $(this).addClass(remove_class);
+
+            if (!performance) {
+                $(performance_modify_selector).click();
+            }
         }
         white_interior = !white_interior;
         update_data();
         update_total();
     });
 
-    var performance_modify_selector = '.data .performance .modify';
     var battery_modify_selector = '.data .battery .modify';
     $(battery_modify_selector).click(function () {
         if (battery === standard) {
@@ -281,9 +293,7 @@ $(function () {
             $(this).addClass(add_class);
 
             if (performance) {
-                performance = false;
-                $(performance_modify_selector).removeClass(remove_class);
-                $(performance_modify_selector).addClass(add_class);
+                $(performance_modify_selector).click();
             }
         }
         update_data();
@@ -298,10 +308,8 @@ $(function () {
             $(this).addClass(add_class);
 
             if (self_driving) {
-                self_driving = false;
-                $(self_driving_modify_selector).removeClass(remove_class);
-                $(self_driving_modify_selector).addClass(add_class);
-            }            
+                $(self_driving_modify_selector).click();
+            }
         } else {
             $(this).removeClass(add_class);
             $(this).addClass(remove_class);
@@ -312,14 +320,12 @@ $(function () {
     });
 
     $(self_driving_modify_selector).click(function () {
-        if ( ! self_driving) {
+        if (!self_driving) {
             $(this).removeClass(add_class);
             $(this).addClass(remove_class);
 
-            if ( ! autopilot) {
-                autopilot = true;
-                $(autopilot_modify_selector).removeClass(add_class);
-                $(autopilot_modify_selector).addClass(remove_class);
+            if (!autopilot) {
+                $(autopilot_modify_selector).click();
             }
         } else {
             $(this).removeClass(remove_class);
@@ -337,9 +343,7 @@ $(function () {
             $(this).addClass(add_class);
 
             if (performance) {
-                performance = false;
-                $(performance_modify_selector).removeClass(remove_class);
-                $(performance_modify_selector).addClass(add_class);
+                $(performance_modify_selector).click();
             }
         } else {
             $(this).removeClass(add_class);
@@ -354,22 +358,52 @@ $(function () {
         if (performance) {
             $(this).removeClass(remove_class);
             $(this).addClass(add_class);
+
+            if (white_interior) {
+                $(white_interior_modify_selector).click();
+            }
+            if (performance_upgrade) {
+                $(performance_upgrade_modify_selector).click();
+            }
         } else {
             $(this).removeClass(add_class);
             $(this).addClass(remove_class);
 
-            if ( ! dual) {
-                dual = true;
-                $(dual_modify_selector).removeClass(add_class);
-                $(dual_modify_selector).addClass(remove_class);
+            if (!dual) {
+                $(dual_modify_selector).click();
             }
             if (battery === standard) {
-                battery = long;
-                $(battery_modify_selector).removeClass(add_class);
-                $(battery_modify_selector).addClass(remove_class);
+                $(battery_modify_selector).click();
             }
         }
         performance = !performance;
+        update_data();
+        update_total();
+    });
+
+    $(performance_upgrade_modify_selector).click(function () {
+        if (performance_upgrade) {
+            $(this).removeClass(remove_class);
+            $(this).addClass(add_class);
+            performance_upgrade = false;
+
+            if (wheels === sport) {
+                $('.wheels .button.aero').click();
+            }
+        } else {
+            $(this).removeClass(add_class);
+            $(this).addClass(remove_class);
+            performance_upgrade = true;
+
+            if (wheels === aero) {
+                $('.wheels .button.sport').click();
+            }
+
+            if (!performance) {
+                $(performance_modify_selector).click();
+            }
+        }
+
         update_data();
         update_total();
     });
@@ -436,6 +470,7 @@ $(function () {
         $('.data .wheels .price').text(wheels_price);
 
         $('.data .premium .price').text('+' + currency_format(prices[currency].premium) + (currency === usd ? '' : '**'));
+        $('.data .white_interior .price').text('+' + currency_format(prices[currency].white_interior));
 
         var battery_price = battery === standard ?
             lang[current_lang].included :
@@ -446,6 +481,7 @@ $(function () {
         $('.data .self_driving .price').text('+' + currency_format(prices[currency].self_driving) + (currency === usd ? '' : '**'));
         $('.data .dual .price').text('+' + currency_format(prices[currency].premium));
         $('.data .performance .price').text('+' + currency_format(prices[currency].performance));
+        $('.data .performance_upgrade .price').text('+' + currency_format(prices[currency].performance_upgrade));
 
         if (currency == 'eur') {
             $('.currency_symbol.before').hide();
@@ -469,6 +505,7 @@ $(function () {
         $('.self_driving .title').text(lang[current_lang].data.self_driving);
         $('.dual .title').text(lang[current_lang].data.dual);
         $('.performance .title').text(lang[current_lang].data.performance);
+        $('.performance_upgrade .title').text(lang[current_lang].data.performance_upgrade);
 
         // Form
         $('label[for="import"]').text(lang[current_lang].form.import);
@@ -503,7 +540,7 @@ $(function () {
         var premium_text = premium ? lang[current_lang].yes : lang[current_lang].no;
         $('.data .premium .text').text(premium_text);
 
-        var premium_text = white_interior ? lang[current_lang].yes : lang[current_lang].no;
+        var white_interior_text = white_interior ? lang[current_lang].yes : lang[current_lang].no;
         $('.data .white_interior .text').text(white_interior_text);
 
         var battery_text = lang[current_lang].battery[battery];
@@ -520,6 +557,9 @@ $(function () {
 
         var performance_text = performance ? lang[current_lang].yes : lang[current_lang].no;
         $('.data .performance .text').text(performance_text);
+
+        var performance_upgrade_text = performance_upgrade ? lang[current_lang].yes : lang[current_lang].no;
+        $('.data .performance_upgrade .text').text(performance_upgrade_text);
     };
 
     var update_total = function () {
@@ -542,7 +582,13 @@ $(function () {
         if (performance) {
             price += prices[currency].performance;
         }
-        price += prices[currency].wheels[wheels];
+        if (performance_upgrade) {
+            price += prices[currency].performance_upgrade;
+        }
+        if (!performance_upgrade) {
+            price += prices[currency].wheels[wheels];
+        }
+
         price += prices[currency].paint[color];
         price += prices[currency].battery[battery];
 
