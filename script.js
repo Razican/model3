@@ -8,6 +8,7 @@ $(function () {
     var silver = 'silver';
     var midnight = 'midnight';
     var white = 'white';
+    var obsidian = 'obsidian';
 
     var aero = 'aero';
     var sport = 'sport';
@@ -34,61 +35,65 @@ $(function () {
     var performance = false;
     var performance_upgrade = false;
 
-    var usd_to_eur = 0.855544;
+    var usd_to_eur = 0.86449;
     var change_margin = 1.03;
 
     var prices = {
-        'usd': {
+        usd: {
             'base': 35000,
             'wheels': {
                 'aero': 0,
                 'sport': 1500,
             },
             'paint': {
-                'black': 0,
-                'blue': 1000,
-                'red': 1500,
-                'silver': 1000,
-                'midnight': 1000,
-                'white': 1500
+                black: 0,
+                blue: 1500,
+                red: 2000,
+                silver: 1500,
+                midnight: 1500,
+                white: 2000,
+                obsidian: 1500
             },
             'battery': {
-                'standard': 0,
-                'long': 9000
+                standard: 0,
+                long: 9000
             },
             'premium': 5000,
             'white_interior': 1500,
             'autopilot': 5000,
             'self_driving': 3000,
-            'dual': 4000,
-            'performance': 11000,
-            'performance_upgrade': 5000
+            'dual': 5000,
+            'performance': 10000,
+            'performance_upgrade': 5000,
+            'dest_doc': 1200
         },
-        'eur': {
+        eur: {
             'base': Math.round(35000 * usd_to_eur * change_margin),
             'wheels': {
-                'aero': 0,
-                'sport': Math.round(1500 * usd_to_eur * change_margin),
+                aero: 0,
+                sport: Math.round(1500 * usd_to_eur * change_margin),
             },
             'paint': {
-                'black': 0,
-                'blue': Math.round(1000 * usd_to_eur * change_margin),
-                'red': Math.round(1500 * usd_to_eur * change_margin),
-                'silver': Math.round(1000 * usd_to_eur * change_margin),
-                'midnight': Math.round(1000 * usd_to_eur * change_margin),
-                'white': Math.round(1500 * usd_to_eur * change_margin)
+                black: 0,
+                blue: Math.round(1500 * usd_to_eur * change_margin),
+                red: Math.round(2000 * usd_to_eur * change_margin),
+                silver: Math.round(1500 * usd_to_eur * change_margin),
+                midnight: Math.round(1500 * usd_to_eur * change_margin),
+                white: Math.round(2000 * usd_to_eur * change_margin),
+                obsidian: Math.round(1500 * usd_to_eur * change_margin)
             },
             'battery': {
-                'standard': 0,
-                'long': Math.round(9000 * usd_to_eur * change_margin)
+                standard: 0,
+                long: Math.round(9000 * usd_to_eur * change_margin)
             },
             'premium': Math.round(5000 * usd_to_eur * change_margin),
             'white_interior': Math.round(1500 * usd_to_eur * change_margin),
             'autopilot': Math.round(5000 * usd_to_eur * change_margin),
             'self_driving': Math.round(3000 * usd_to_eur * change_margin),
-            'dual': Math.round(4000 * usd_to_eur * change_margin),
-            'performance': Math.round(11000 * usd_to_eur * change_margin),
+            'dual': Math.round(5000 * usd_to_eur * change_margin),
+            'performance': Math.round(10000 * usd_to_eur * change_margin),
             'performance_upgrade': Math.round(5000 * usd_to_eur * change_margin),
+            'dest_doc': Math.round(1500 * usd_to_eur * change_margin)
         }
     };
 
@@ -101,20 +106,21 @@ $(function () {
             'h1': 'Configure your Tesla Model 3',
             'included': 'Included',
             'wheels': {
-                'aero': 'Aero',
-                'sport': 'Sport',
+                aero: 'Aero',
+                sport: 'Sport',
             },
             'paint': {
-                'black': 'Solid Black',
-                'blue': 'Deep Blue Metallic',
-                'red': 'Red Multi-Coat',
-                'silver': 'Silver Metallic',
-                'midnight': 'Midnight Silver Metallic',
-                'white': 'Pearl White Multi-Coat'
+                black: 'Solid Black',
+                blue: 'Deep Blue Metallic',
+                red: 'Red Multi-Coat',
+                silver: 'Silver Metallic',
+                midnight: 'Midnight Silver Metallic',
+                white: 'Pearl White Multi-Coat',
+                obsidian: 'Obsidian Black Metallic'
             },
             'battery': {
-                'standard': 'Standard (220 miles)',
-                'long': 'Long Range (310 miles)'
+                standard: 'Standard (220 miles)',
+                long: 'Long Range (310 miles)'
             },
             'data': {
                 'color': 'Color',
@@ -129,6 +135,7 @@ $(function () {
                 'performance_upgrade': 'Performance Upgrade',
             },
             'form': {
+                'dest_doc': 'Destination &amp; Doc Fee',
                 'import': 'Import Tax',
                 'total_no_vat': 'Total (no VAT)',
                 'vat': 'VAT',
@@ -150,20 +157,21 @@ $(function () {
             'h1': 'Configura tu Tesla Model 3',
             'included': 'Incluido',
             'wheels': {
-                'aero': 'Aero',
-                'sport': 'Sport',
+                aero: 'Aero',
+                sport: 'Sport',
             },
             'paint': {
-                'black': 'Negro sólido',
-                'blue': 'Azul oscuro metálico',
-                'red': 'Red Multi-Coat',
-                'silver': 'Plateado metálico',
-                'midnight': 'Plateado metálico medianoche',
-                'white': 'Pearl White Multi-Coat'
+                black: 'Negro sólido',
+                blue: 'Azul oscuro metálico',
+                red: 'Rojo multi-capa',
+                silver: 'Plateado metálico',
+                midnight: 'Plateado metálico medianoche',
+                white: 'Blanco perlado multi-capa',
+                obsidian: 'Negro obsidiana metálico'
             },
             'battery': {
-                'standard': 'Estándar (354 km)',
-                'long': 'Largo alcance (499 km)'
+                standard: 'Estándar (354 km)',
+                long: 'Largo alcance (499 km)'
             },
             'data': {
                 'color': 'Color',
@@ -178,6 +186,7 @@ $(function () {
                 'performance_upgrade': 'Mejoras para máximo rendimiento',
             },
             'form': {
+                'dest_doc': 'Tasa de destinación y documentación',
                 'import': 'Tasas de importación',
                 'total_no_vat': 'Total (sin IVA)',
                 'vat': 'IVA',
@@ -219,6 +228,8 @@ $(function () {
             color = midnight;
         } else if ($(this).hasClass(white)) {
             color = white;
+        } else if ($(this).hasClass(obsidian)) {
+            color = obsidian;
         }
         update_image();
         $('.color .button.selected').removeClass(selected_class);
@@ -490,6 +501,8 @@ $(function () {
             $('.currency_symbol.after').hide();
             $('.currency_symbol.before').show();
         }
+
+        $('.price .dest_doc .price').text(currency_format(prices[currency].dest_doc))
     };
     var update_language = function () {
         $('title').text(lang[current_lang].title);
@@ -508,6 +521,7 @@ $(function () {
         $('.performance_upgrade .title').text(lang[current_lang].data.performance_upgrade);
 
         // Form
+        $('.dest_doc .title').text(lang[current_lang].form.dest_doc);
         $('label[for="import"]').text(lang[current_lang].form.import);
         $('.total-no-vat .title').text(lang[current_lang].form.total_no_vat);
         $('label[for="vat"]').text(lang[current_lang].form.vat);
@@ -591,6 +605,8 @@ $(function () {
 
         price += prices[currency].paint[color];
         price += prices[currency].battery[battery];
+
+        price += prices[currency].dest_doc;
 
         var import_price = price * (import_tax - 1);
         $('.price .import span').text(currency_format(import_price));
