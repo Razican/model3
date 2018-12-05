@@ -31,12 +31,12 @@ $(function () {
     var battery = long;
     var autopilot = false;
     // var self_driving = false;
-    var dual = false;
+    var dual = true;
     var performance = false;
     var performance_upgrade = false;
 
     var usd_to_eur = 0.881475;
-    var change_margin = 1.03;
+    var change_margin = 1;
 
     var prices = {
         usd: {
@@ -56,47 +56,47 @@ $(function () {
             },
             'battery': {
                 standard: 0,
-                mid: 2000,
+                mid: 6000,
                 long: 9000
             },
             'premium': 5000,
             'white_interior': 1500,
             'autopilot': 5000,
             // 'self_driving': 3000,
-            'dual': 5000,
-            'performance': 10000,
+            'dual': 4000,
+            'performance': 6000,
             'performance_upgrade': 5000,
             'dest_doc': 1200
         },
-        eur: {
-            'base': Math.round(35000 * usd_to_eur * change_margin),
-            'wheels': {
-                aero: 0,
-                sport: 1600,
-            },
-            'paint': {
-                black: 0,
-                blue: 1600 / 1.2,
-                red: 2600 / 1.2,
-                silver: 1600 / 1.2,
-                midnight: 1600 / 1.2,
-                white: 2000 / 1.2,
-                obsidian: 1600 / 1.2
-            },
-            'battery': {
-                standard: 0,
-                mid: Math.round(2000 * usd_to_eur * change_margin),
-                long: Math.round(9000 * usd_to_eur * change_margin)
-            },
-            'premium': Math.round(5000 * usd_to_eur * change_margin),
-            'white_interior': Math.round(1500 * usd_to_eur * change_margin),
-            'autopilot': 5300,
-            // 'self_driving': Math.round(3000 * usd_to_eur * change_margin),
-            'dual': Math.round(5000 * usd_to_eur * change_margin),
-            'performance': Math.round(10000 * usd_to_eur * change_margin),
-            'performance_upgrade': Math.round(5000 * usd_to_eur * change_margin),
-            'dest_doc': Math.round(1500 * usd_to_eur * change_margin)
-        }
+    };
+    prices.eur = {
+        'base': Math.round(prices.usd.base * usd_to_eur * change_margin),
+        'wheels': {
+            aero: 0,
+            sport: 1600 / 1.2,
+        },
+        'paint': {
+            black: 0,
+            blue: 1600 / 1.2,
+            red: 2600 / 1.2,
+            silver: 1600 / 1.2,
+            midnight: 1600 / 1.2,
+            white: 2000 / 1.2,
+            obsidian: 1600 / 1.2
+        },
+        'battery': {
+            standard: 0,
+            mid: Math.round(prices.usd.battery.mid * usd_to_eur * change_margin),
+            long: Math.round(prices.usd.battery.long * usd_to_eur * change_margin)
+        },
+        'premium': Math.round(prices.usd.premium * usd_to_eur * change_margin),
+        'white_interior': Math.round(prices.usd.white * usd_to_eur * change_margin),
+        'autopilot': 5300 / 1.2,
+        // 'self_driving': Math.round(prices.usd.self_driving * usd_to_eur * change_margin),
+        'dual': Math.round(prices.usd.dual * usd_to_eur * change_margin),
+        'performance': Math.round(prices.usd.performance * usd_to_eur * change_margin),
+        'performance_upgrade': Math.round(prices.usd.performance_upgrade * usd_to_eur * change_margin),
+        'dest_doc': Math.round(prices.usd.dest_doc * usd_to_eur * change_margin)
     };
 
     var lang = {
@@ -147,7 +147,7 @@ $(function () {
             },
             'notes': {
                 'title': 'Note',
-                'self_driving': 'Full Self-Driving requires Enhanced Autopilot',
+                // 'self_driving': 'Full Self-Driving requires Enhanced Autopilot',
                 'price': 'Tentative price, not officially released by Tesla',
                 'performance': 'Performance requires all wheel drive'
             }
@@ -199,7 +199,7 @@ $(function () {
             },
             'notes': {
                 'title': 'Nota',
-                'self_driving': 'La conducción autónoma require el piloto automático mejorado',
+                // 'self_driving': 'La conducción autónoma require el piloto automático mejorado',
                 'price': 'Precio tentativo, no publicado por Tesla',
                 'performance': 'El modo máximo rendimiento requiere tracción integral'
             }
@@ -493,7 +493,7 @@ $(function () {
         $('.data .battery .price').text(battery_price);
 
         $('.data .autopilot .price').text('+' + currency_format(prices[currency].autopilot) + (currency === usd ? '' : '**'));
-        $('.data .self_driving .price').text('+' + currency_format(prices[currency].self_driving) + (currency === usd ? '' : '**'));
+        // $('.data .self_driving .price').text('+' + currency_format(prices[currency].self_driving) + (currency === usd ? '' : '**'));
         $('.data .dual .price').text('+' + currency_format(prices[currency].premium));
         $('.data .performance .price').text('+' + currency_format(prices[currency].performance));
         $('.data .performance_upgrade .price').text('+' + currency_format(prices[currency].performance_upgrade));
@@ -534,7 +534,7 @@ $(function () {
 
         // Notes
         $('.note .title').text(lang[current_lang].notes.title);
-        $('.note.self-driving .text').text(lang[current_lang].notes.self_driving);
+        // $('.note.self-driving .text').text(lang[current_lang].notes.self_driving);
         $('.note.price .text').text(lang[current_lang].notes.price);
         $('.note.performance .text').text(lang[current_lang].notes.performance);
     };
@@ -681,9 +681,9 @@ $(function () {
             case "autopilot":
                 // TODO parse boolean
                 break;
-            case "self_driving":
-                // TODO parse boolean
-                break;
+            // case "self_driving":
+            //     // TODO parse boolean
+            //     break;
             case "dual":
                 // TODO parse boolean
                 break;
